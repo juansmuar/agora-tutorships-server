@@ -12,5 +12,12 @@ module.exports = {
   },
   rules: {
     'arrow-body-style': 'off',
+    // allowForLoopAfterthoughts: true,
+    'no-underscore-dangle': [
+      'error',
+      {
+        allow: ['_id'],
+      },
+    ],
   },
 };

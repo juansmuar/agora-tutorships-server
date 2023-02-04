@@ -2,7 +2,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable object-shorthand */
 /* eslint-disable func-names */
-/* eslint-disable no-useless-escape */
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -11,7 +10,7 @@ const studentSchema = mongoose.Schema(
     name: { type: String, required: [true, 'Name is required'] },
     email: {
       type: String,
-      match: /.+\@.+\..+/,
+      match: /.+@.+\..+/,
       required: [true, 'Email is required'],
       validate: {
         validator: async function (value) {

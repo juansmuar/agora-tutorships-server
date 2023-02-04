@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable quote-props */
 const Tutor = require('../models/tutor.model');
 const Student = require('../models/student.model');
 const Tutorship = require('../models/tutorship.model');
@@ -23,12 +21,12 @@ const createTutorship = async (req, res, next) => {
         user: student,
         template: 'd-c81fed9ad95d4740a44b1f7760976fe9',
         templateData: {
-          'student': student.name,
-          'tutor': tutor.name,
-          'subject': tutor.focus,
-          'date': newDate.slice(0, 10),
-          'status': 'created but is pending for payment',
-          'url': 'https://agora-projectagora2021-gmailcom.vercel.app/profile/tutorships',
+          student: student.name,
+          tutor: tutor.name,
+          subject: tutor.focus,
+          date: newDate.slice(0, 10),
+          status: 'created but is pending for payment',
+          url: 'https://agora-projectagora2021-gmailcom.vercel.app/profile/tutorships',
         },
       });
       // Send Email Tutor
@@ -36,11 +34,11 @@ const createTutorship = async (req, res, next) => {
         user: tutor,
         template: 'd-4347de2b9f6c4d129c7c53f5a29d99dd',
         templateData: {
-          'student': student.name,
-          'tutor': tutor.name,
-          'date': newDate.slice(0, 10),
-          'status': 'created but is pending for payment',
-          'url': 'https://agora-projectagora2021-gmailcom.vercel.app/profile/tutorships',
+          student: student.name,
+          tutor: tutor.name,
+          date: newDate.slice(0, 10),
+          status: 'created but is pending for payment',
+          url: 'https://agora-projectagora2021-gmailcom.vercel.app/profile/tutorships',
         },
       });
       next();

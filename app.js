@@ -12,7 +12,7 @@ const updateProfile = require('./routes/updateProfile');
 const loginRoute = require('./routes/login');
 const tutorships = require('./routes/tutorships');
 const students = require('./routes/students');
-const payments = require('./routes/payment');
+// const payments = require('./routes/payment');
 
 const app = express();
 
@@ -27,9 +27,9 @@ app.use(updateProfile);
 app.use(tutorSearch);
 app.use(tutorships);
 app.use(students);
-app.use(payments);
+// app.use(payments);
 
-const uri = process.env.ATLAS_URI;
+const uri = process.env.MONGO_DB_URI;
 
 mongoose.connect(uri, { useNewUrlParser: true });
 const { connection } = mongoose;

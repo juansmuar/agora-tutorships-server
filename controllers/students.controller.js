@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-const mongoose = require('mongoose');
 const Students = require('../models/student.model');
 
 const getStudents = async (req, res) => {

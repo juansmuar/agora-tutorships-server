@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-const mongoose = require('mongoose');
 const Categories = require('../models/categories.model');
 
 const getCategories = async (req, res) => {

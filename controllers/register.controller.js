@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable new-cap */
 const jwt = require('jsonwebtoken');
 const Tutor = require('../models/tutor.model');
 const Student = require('../models/student.model');
@@ -10,10 +8,10 @@ const createUser = async (req, res) => {
   try {
     const { type, inputs } = req.body;
 
-    let userSchema = '';
-    userSchema = type === 'student' ? Student : Tutor;
+    let UserSchema = '';
+    UserSchema = type === 'student' ? Student : Tutor;
 
-    const user = await new userSchema(inputs);
+    const user = await new UserSchema(inputs);
     await user.save();
 
     const token = await jwt.sign(
@@ -29,8 +27,8 @@ const createUser = async (req, res) => {
     res.status(201).json(userInfo);
     sendEmail({
       user,
-      template: 'd-0bc86a7e18464b9191cb127be79f094c',
-      templateData: { name: user.name },
+      // template: 'd-0bc86a7e18464b9191cb127be79f094c',
+      // templateData: { name: user.name },
     });
   } catch (err) {
     res.status(400).json(`Error: ${err}`);

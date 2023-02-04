@@ -1,7 +1,4 @@
-/* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
-const Tutor = require('./tutor.model');
-const Student = require('./student.model');
 
 const favoriteSchema = mongoose.Schema({
   studentId: {

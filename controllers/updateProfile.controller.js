@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-underscore-dangle */
 const cloudinary = require('cloudinary').v2;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -55,7 +53,7 @@ const updateProfileImage = async (req, res, next) => {
         return next();
       }
       const { url } = result;
-      res.status(200).send(url);
+      return res.status(200).send(url);
     });
   } catch (error) {
     res.status(200).send(null);

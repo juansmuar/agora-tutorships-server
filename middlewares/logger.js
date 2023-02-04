@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const jwt = require('jsonwebtoken');
 const Student = require('../models/student.model');
 const Tutor = require('../models/tutor.model');
