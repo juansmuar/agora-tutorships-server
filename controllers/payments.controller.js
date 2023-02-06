@@ -1,14 +1,18 @@
 /* eslint-disable no-shadow */
-const epayco = require('epayco-sdk-node')({
-  apiKey: 'a4aa69c0913124a45aaf2ff8dd0e031d',
-  privateKey: process.env.EPAYCO_PRIVATE_KEY,
-  lang: 'ES',
-  test: true,
-});
-
+const Stripe = require('stripe');
 const Student = require('../models/student.model');
 const Payment = require('../models/payment.model');
 const Tutorship = require('../models/tutorship.model');
+
+const secret = process.env.STRIPE_SECRET_KEY;
+const stripe = new Stripe(secret, { apiVersion: '2022-11-15' });
+
+// const epayco = require('epayco-sdk-node')({
+//   apiKey: 'a4aa69c0913124a45aaf2ff8dd0e031d',
+//   privateKey: process.env.EPAYCO_PRIVATE_KEY,
+//   lang: 'ES',
+//   test: true,
+// });
 
 async function addCard(req, res) {
   // first creates card using card info
