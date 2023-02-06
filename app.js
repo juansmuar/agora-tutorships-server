@@ -2,6 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
 const registerRoute = require('./routes/register');
 const tutorSearch = require('./routes/tutorSearch');
@@ -18,6 +19,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(morgan('dev'));
 app.use(loginRoute);
 app.use(registerRoute);
 app.use(tutorProfileRoutes);
