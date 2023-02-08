@@ -7,12 +7,17 @@ const PaymentSchema = mongoose.Schema(
       ref: 'Student',
       required: true,
     },
-    customerId: {
+    epaycoCustomerId: {
       type: String,
+      required: true,
     },
-    refId: {
+    ref_payco: {
       type: String,
       unique: true,
+      required: true,
+    },
+    factura: {
+      type: String,
       required: true,
     },
     descripcion: {
@@ -27,11 +32,6 @@ const PaymentSchema = mongoose.Schema(
     },
     valorneto: {
       type: Number,
-    },
-    currency: {
-      type: String,
-      trim: true,
-      uppercase: true,
     },
   },
   {
