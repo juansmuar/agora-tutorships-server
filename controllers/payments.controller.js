@@ -54,18 +54,18 @@ const stripe = new Stripe(secret, { apiVersion: '2022-11-15' });
 
 async function payment(req, res) {
   const {
-    tutorshipId, cardInfo, customerInfo, userId, paymentInfo, currentPaymentData, paymentMethod,
+    tutorshipId, customerInfo, userId, paymentInfo, paymentMethod,
   } = req.body;
-  console.log(req.body);
+  console.log(paymentInfo);
   try {
     // make payment
     const { id } = paymentMethod;
     const payment = await stripe.paymentIntents.create({
       payment_method: id,
-      amount: paymentInfo?.value,
+      amount: (paymentInfo.value) / 100,
       currency: 'usd',
       confirm: true,
-      description: 'NFT payment',
+      description: `Tutorship: ${tutorshipId} with ${paymentInfo.tutor}`,
     });
 
     // save payment schema
