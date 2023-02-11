@@ -2,6 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
 const registerRoute = require('./routes/register');
 const tutorSearch = require('./routes/tutorSearch');
@@ -12,12 +13,13 @@ const updateProfile = require('./routes/updateProfile');
 const loginRoute = require('./routes/login');
 const tutorships = require('./routes/tutorships');
 const students = require('./routes/students');
-// const payments = require('./routes/payment');
+const payments = require('./routes/payment');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(morgan('dev'));
 app.use(loginRoute);
 app.use(registerRoute);
 app.use(tutorProfileRoutes);
@@ -27,7 +29,7 @@ app.use(updateProfile);
 app.use(tutorSearch);
 app.use(tutorships);
 app.use(students);
-// app.use(payments);
+app.use(payments);
 
 const uri = process.env.MONGO_DB_URI;
 

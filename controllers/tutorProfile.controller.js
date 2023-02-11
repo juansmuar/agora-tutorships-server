@@ -5,6 +5,7 @@ const getTutorData = async (req, res) => {
   try {
     const tutor = await Tutor.findById({ _id: req.params.id });
     const {
+      _id,
       name,
       email,
       profilephoto,
@@ -18,6 +19,7 @@ const getTutorData = async (req, res) => {
       'name',
     );
     const tutorData = {
+      _id,
       name,
       email,
       profilephoto,

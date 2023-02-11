@@ -6,7 +6,7 @@ const sendEmail = require('../utils/sendEmail');
 const createTutorship = async (req, res, next) => {
   try {
     const {
-      email, tutorId, date, time,
+      email, date, time, tutorId,
     } = req.body;
     const student = await Student.findOne({ email });
     if (student) {
@@ -64,4 +64,16 @@ const getTutorships = async (req, res, next) => {
   }
 };
 
-module.exports = { createTutorship, getTutorships };
+const cancelTutorship = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const { tutorshipId } = req.body;
+    const tutorship = await Tutorship.findByIdAndDelete({ _id: tutorshipId });
+    res.status(200).json(tutorship);
+    next();
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+module.exports = { createTutorship, getTutorships, cancelTutorship };
