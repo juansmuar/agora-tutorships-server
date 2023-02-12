@@ -26,14 +26,4 @@ const sendEmail = ({ user, template, templateData }) => {
     });
 };
 
-// const user = {
-//   name: "Esteban",
-//   email: "leramirezca@gmail.com"
-// }
-// sendEmail({
-//   user: user,
-//   template: 'd-0bc86a7e18464b9191cb127be79f094c',
-//   templateData: {"name": user.name}
-// })
-
 module.exports = sendEmail;
