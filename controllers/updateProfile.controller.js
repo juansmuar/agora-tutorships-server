@@ -1,19 +1,26 @@
+const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Student = require('../models/student.model');
 const Tutor = require('../models/tutor.model');
 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
 const updateProfile = async (req, res, next) => {
   try {
     const {
-      name, email, password, description, schedule,
+      name, email, password, description, schedule, price,
     } = req.body.inputs;
     const { url, token, type } = req.body;
     const userSchema = type === 'student' ? Student : Tutor;
     const userExists = await userSchema.findOne({ email });
     if (userExists) {
-      res.status(409).send('Email is already taken');
+      res.status(409).send('Sorry... email is alredy taken');
       next();
     } else {
       const { userData } = jwt.verify(token, 'secret key');
@@ -27,6 +34,7 @@ const updateProfile = async (req, res, next) => {
           profilephoto: url || userData.profilephoto,
           description: description || userData.description,
           schedule: schedule || userData.schedule,
+          price: price || userData.price,
         },
       );
       const newUserData = await userSchema.findOne({ _id: userData._id });
@@ -46,15 +54,30 @@ const updateProfile = async (req, res, next) => {
   }
 };
 
-const updateProfileImage = async (req, res, next) => {
+// eslint-disable-next-line consistent-return
+const updateProfileImage = async (req, res) => {
   try {
-    cloudinary.uploader.upload(req.files.image.file, (error, result) => {
-      if (error) {
-        return next();
-      }
+    const { path, size } = req.file;
+    const maxSize = 1024 * 1024 * 5;
+
+    if (size > maxSize) {
+      fs.unlinkSync(path);
+      return res.status(400).json({ message: 'File is too large' });
+    }
+
+    try {
+      const result = await cloudinary.uploader.upload(path, {
+        folder: 'profilePictures',
+        use_filename: true,
+        unique_filename: false,
+      });
       const { url } = result;
       return res.status(200).send(url);
-    });
+    } catch (error) {
+      res.status(200).send(null);
+    } finally {
+      fs.unlinkSync(path);
+    }
   } catch (error) {
     res.status(200).send(null);
   }
