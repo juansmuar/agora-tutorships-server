@@ -5,9 +5,9 @@ const sendEmail = require('../utils/sendEmail');
 
 const createTutorship = async (req, res, next) => {
   try {
-    const {
-      email, date, time, tutorId,
-    } = req.body;
+    const { date, time } = req.body;
+    const { email } = req.body.student || req.body;
+    const { tutorId } = req.body;
     const student = await Student.findOne({ email });
     if (student) {
       const newDate = `${date}T${time}:00.000z`;
