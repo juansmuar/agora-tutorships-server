@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
 const Stripe = require('stripe');
 const Student = require('../models/student.model');
 const Payment = require('../models/payment.model');
@@ -52,7 +51,7 @@ const stripe = new Stripe(secret, { apiVersion: '2022-11-15' });
 //   }
 // }
 
-async function payment(req, res) {
+async function payments(req, res) {
   const {
     tutorshipId, customerInfo, userId, paymentInfo, paymentMethod,
   } = req.body;
@@ -87,6 +86,6 @@ async function payment(req, res) {
 }
 
 module.exports = {
-  payment,
+  payments,
   // addCard, getCustomer, deleteCard,
 };

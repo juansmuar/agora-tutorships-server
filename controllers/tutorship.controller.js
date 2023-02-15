@@ -1,6 +1,7 @@
 const Tutor = require('../models/tutor.model');
 const Student = require('../models/student.model');
 const Tutorship = require('../models/tutorship.model');
+const Review = require('../models/review.model');
 const sendEmail = require('../utils/sendEmail');
 
 const createTutorship = async (req, res, next) => {
@@ -66,7 +67,6 @@ const getTutorships = async (req, res, next) => {
 
 const cancelTutorship = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { tutorshipId } = req.body;
     const tutorship = await Tutorship.findByIdAndDelete({ _id: tutorshipId });
     res.status(200).json(tutorship);
@@ -76,4 +76,42 @@ const cancelTutorship = async (req, res, next) => {
   }
 };
 
-module.exports = { createTutorship, getTutorships, cancelTutorship };
+const completeTutorship = async (req, res, next) => {
+  try {
+    const { tutorshipId } = req.body;
+    const filterTutorship = { _id: tutorshipId };
+    const updateTutorship = { status: 'completed' };
+    const updatedTutorship = await Tutorship.updateOne(filterTutorship, updateTutorship);
+    res.status(200).json(updatedTutorship);
+    next();
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const rateTutorship = async (req, res, next) => {
+  try {
+    const {
+      studentId, tutorId, tutorshipId, rating, review,
+    } = req.body;
+    const tutor = await Tutor.findOne({ _id: tutorId });
+    if (tutor) {
+      const newReview = await Review.create({
+        studentId, tutorId, tutorshipId, rating, comment: review,
+      });
+      const filterTutorship = { _id: tutorshipId };
+      const updateTutorship = { isRated: true };
+      await Tutorship.updateOne(filterTutorship, updateTutorship);
+      res.status(200).json(newReview);
+      next();
+    } else {
+      res.status(400).json({ message: 'Tutor email not found' });
+    }
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
+module.exports = {
+  createTutorship, getTutorships, cancelTutorship, completeTutorship, rateTutorship,
+};
