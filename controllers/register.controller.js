@@ -31,6 +31,7 @@ const createUser = async (req, res) => {
       // templateData: { name: user.name },
     });
   } catch (err) {
+    console.log(err);
     res.status(400).json(`Error: ${err}`);
   }
 };
